@@ -85,12 +85,11 @@ async function CreateUser(data: UsersInterface) {
   };
 
   let res = await fetch(`${apiUrl}/users`, requestOptions)
-    .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return { status: true, message: res.data };
+      if (res.status == 201) {
+        return res.json();
       } else {
-        return { status: false, message: res.error };
+        return false;
       }
     });
 

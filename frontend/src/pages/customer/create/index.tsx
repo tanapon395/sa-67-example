@@ -15,7 +15,6 @@ import {
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { UsersInterface } from "../../../interfaces/IUser";
 import { GendersInterface } from "../../../interfaces/IGender";
-import { ImageUpload } from "../../../interfaces/IUpload";
 import { CreateUser, GetGenders } from "../../../services/https";
 import { useNavigate } from "react-router-dom";
 
@@ -25,11 +24,11 @@ function CustomerCreate() {
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
   const [genders, setGenders] = useState<GendersInterface[]>([]);
-  const [profile, setProfile] = useState<ImageUpload>();
 
   const onFinish = async (values: UsersInterface) => {
     let res = await CreateUser(values);
-    if (res.status) {
+    console.log(res)
+    if (res) {
       messageApi.open({
         type: "success",
         content: "บันทึกข้อมูลสำเร็จ",
@@ -40,7 +39,7 @@ function CustomerCreate() {
     } else {
       messageApi.open({
         type: "error",
-        content: res.message,
+        content: "เกิดข้อผิดพลาด !",
       });
     }
   };
@@ -56,13 +55,6 @@ function CustomerCreate() {
     getGender();
   }, []);
 
-  const normFile = (e: any) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    setProfile(e?.fileList[0]);
-    return e?.fileList;
-  };
 
   return (
     <div>
@@ -143,12 +135,12 @@ function CustomerCreate() {
               <Form.Item
                 label="วัน/เดือน/ปี เกิด"
                 name="birthday"
-                rules={[
-                  {
-                    required: true,
-                    message: "กรุณาเลือกวัน/เดือน/ปี เกิด !",
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: "กรุณาเลือกวัน/เดือน/ปี เกิด !",
+                //   },
+                // ]}
               >
                 <DatePicker style={{ width: "100%" }} />
               </Form.Item>
@@ -173,7 +165,7 @@ function CustomerCreate() {
             <Col style={{ marginTop: "40px" }}>
               <Form.Item>
                 <Space>
-                  <Button htmlType="button" style={{ marginRight: "10px" }}>
+                  <Button  htmlType="button" style={{ marginRight: "10px" }}>
                     ยกเลิก
                   </Button>
                   <Button
