@@ -15,6 +15,15 @@ function Customers() {
       key: "id",
     },
     {
+      title: "รูปประจำตัว",
+      dataIndex: "Profile",
+      key: "profile",
+      width: "15%",
+      render: (text, record, index) => (
+        <img src={record.Profile} className="w3-left w3-circle w3-margin-right" width="100%" />
+      )
+    },
+    {
       title: "ชื่อ",
       dataIndex: "FirstName",
       key: "firstname",

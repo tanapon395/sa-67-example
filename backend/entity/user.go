@@ -13,6 +13,7 @@ type User struct {
 	Email     string
 	Password  string
 	BirthDay  time.Time
+	Profile   string `gorm:"type:longtext"`
 
 	// GenderID ทำหน้าที่เป็น FK
 	GenderID uint

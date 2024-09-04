@@ -38,6 +38,7 @@ func CreateUser(c *gin.Context) {
 		Email:     user.Email,     // ตั้งค่าฟิลด์ Email
 		Password:  hashedPassword,
 		BirthDay:  user.BirthDay,
+		Profile:   user.Profile, // ตั้งค่าฟิลด์ Profile
 		GenderID:  user.GenderID,
 		Gender:    gender, // โยงความสัมพันธ์กับ Entity Gender
 	}

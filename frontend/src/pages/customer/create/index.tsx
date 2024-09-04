@@ -11,12 +11,17 @@ import {
   message,
   Select,
   DatePicker,
+  Upload,
 } from "antd";
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { UsersInterface } from "../../../interfaces/IUser";
 import { GendersInterface } from "../../../interfaces/IGender";
 import { CreateUser, GetGenders } from "../../../services/https";
 import { useNavigate } from "react-router-dom";
+import type { GetProp, UploadFile, UploadProps } from "antd";
+import ImgCrop from "antd-img-crop";
+
+type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
 const { Option } = Select;
 
@@ -24,10 +29,31 @@ function CustomerCreate() {
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
   const [genders, setGenders] = useState<GendersInterface[]>([]);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+  const onChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+
+  const onPreview = async (file: UploadFile) => {
+    let src = file.url as string;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj as FileType);
+        reader.onload = () => resolve(reader.result as string);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
 
   const onFinish = async (values: UsersInterface) => {
+    values.Profile = fileList[0].thumbUrl;
     let res = await CreateUser(values);
-    console.log(res)
+    console.log(res);
     if (res) {
       messageApi.open({
         type: "success",
@@ -55,7 +81,6 @@ function CustomerCreate() {
     getGender();
   }, []);
 
-
   return (
     <div>
       {contextHolder}
@@ -69,6 +94,34 @@ function CustomerCreate() {
           autoComplete="off"
         >
           <Row gutter={[16, 16]}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+              <Form.Item
+                label="รูปประจำตัว"
+                name="Profile"
+                valuePropName="fileList"
+              >
+                <ImgCrop rotationSlider>
+                  <Upload
+                    fileList={fileList}
+                    onChange={onChange}
+                    onPreview={onPreview}
+                    beforeUpload={(file) => {
+                      setFileList([...fileList, file]);
+                      return false;
+                    }}
+                    maxCount={1}
+                    multiple={false}
+                    listType="picture-card"
+                  >
+                    <div>
+                      <PlusOutlined />
+                      <div style={{ marginTop: 8 }}>อัพโหลด</div>
+                    </div>
+                  </Upload>
+                </ImgCrop>
+              </Form.Item>
+            </Col>
+
             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
               <Form.Item
                 label="ชื่อจริง"
@@ -165,7 +218,7 @@ function CustomerCreate() {
             <Col style={{ marginTop: "40px" }}>
               <Form.Item>
                 <Space>
-                  <Button  htmlType="button" style={{ marginRight: "10px" }}>
+                  <Button htmlType="button" style={{ marginRight: "10px" }}>
                     ยกเลิก
                   </Button>
                   <Button
