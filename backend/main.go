@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/tanapon395/sa-67-example/config"
-	"github.com/tanapon395/sa-67-example/controller"
+	"github.com/sahaphonArt/sa-67-example/config"
+	"github.com/sahaphonArt/sa-67-example/controller"
 )
 
 const PORT = "8000"
@@ -24,15 +24,14 @@ func main() {
 
 	router := r.Group("")
 	{
+		router.GET("/product/:id",product.GetProduct)
+        router.GET("/list_products", product.ListProduct)
+		router.POST("/create_product", product.CreateProduct)
+        router.PATCH("/update_product",product.UpdateProduct)
+        router.DELETE("/delete_product/:id",product.DeleteProduct)
 
-		// User Routes
-		router.GET("/users", controller.ListUsers)
-		router.GET("/user/:id", controller.GetUser)
-		router.POST("/users", controller.CreateUser)
-		router.PATCH("/users", controller.UpdateUser)
-		router.DELETE("/users/:id", controller.DeleteUser)
-		// Gender Routes
-		router.GET("/genders", controller.ListGenders)
+		router.GET("/list_concerts", product.ListConcert)
+
 	}
 
 	r.GET("/", func(c *gin.Context) {
