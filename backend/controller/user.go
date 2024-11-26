@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/tanapon395/sa-67-example/config"
 	"github.com/tanapon395/sa-67-example/entity"
@@ -14,6 +15,12 @@ func CreateUser(c *gin.Context) {
 
 	// bind เข้าตัวแปร user
 	if err := c.ShouldBindJSON(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// ตรวจสอบ struc ข้อมูลด้วย govalidator
+	if _, err := govalidator.ValidateStruct(user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -33,12 +40,15 @@ func CreateUser(c *gin.Context) {
 
 	// สร้าง User
 	u := entity.User{
+		StudentID: user.StudentID, // ตั้งค่าฟิลด์ StudentID
 		FirstName: user.FirstName, // ตั้งค่าฟิลด์ FirstName
 		LastName:  user.LastName,  // ตั้งค่าฟิลด์ LastName
 		Email:     user.Email,     // ตั้งค่าฟิลด์ Email
-		Password:  hashedPassword,
-		BirthDay:  user.BirthDay,
-		Profile:   user.Profile, // ตั้งค่าฟิลด์ Profile
+		Phone:     user.Phone,     // ตั้งค่าฟิลด์ Phone
+		Password:  hashedPassword, // ตั้งค่าฟิลด์ Password
+		BirthDay:  user.BirthDay,  // ตั้งค่าฟิลด์ BirthDay
+		Profile:   user.Profile,   // ตั้งค่าฟิลด์ Profile
+		LinkedIn:  user.LinkedIn,  // ตั้งค่าฟิลด์ LinkedIn
 		GenderID:  user.GenderID,
 		Gender:    gender, // โยงความสัมพันธ์กับ Entity Gender
 	}
@@ -104,14 +114,20 @@ func UpdateUser(c *gin.Context) {
 	UserID := c.Param("id")
 
 	db := config.DB()
+
 	result := db.First(&user, UserID)
 	if result.Error != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "id not found"})
 		return
 	}
-
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Bad request, unable to map payload"})
+		return
+	}
+
+	// ตรวจสอบ struc ข้อมูลด้วย govalidator
+	if _, err := govalidator.ValidateStruct(user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 

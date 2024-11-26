@@ -10,16 +10,21 @@ async function GetUsers() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/users`, requestOptions)
-    .then((res) => {
-      if (res.status == 200) {
-        return res.json();
-      } else {
-        return false;
-      }
-    });
+  try {
+    const response = await fetch(`${apiUrl}/users`, requestOptions);
+    const data = await response.json();
 
-  return res;
+    return {
+      status: response.ok,
+      data: data,
+      message: response.ok ? data.message : data.error,
+    };
+  } catch (error) {
+    return {
+      status: false,
+      message: "An error occurred",
+    };
+  }
 }
 
 async function GetGenders() {
@@ -30,52 +35,65 @@ async function GetGenders() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/genders`, requestOptions)
-    .then((res) => {
-      if (res.status == 200) {
-        return res.json();
-      } else {
-        return false;
-      }
-    });
+  try {
+    const response = await fetch(`${apiUrl}/genders`, requestOptions);
+    const data = await response.json();
 
-  return res;
+    return {
+      status: response.ok,
+      data: data,
+      message: response.ok ? data.message : data.error,
+    };
+  } catch (error) {
+    return {
+      status: false,
+      message: "An error occurred",
+    };
+  }
 }
 
 async function DeleteUserByID(id: Number | undefined) {
   const requestOptions = {
-    method: "DELETE"
+    method: "DELETE",
   };
 
-  let res = await fetch(`${apiUrl}/users/${id}`, requestOptions)
-    .then((res) => {
-      if (res.status == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    });
+  try {
+    const response = await fetch(`${apiUrl}/users/${id}`, requestOptions);
+    const data = await response.json();
 
-  return res;
+    return {
+      status: response.ok,
+      message: response.ok ? data.message : data.error,
+    };
+  } catch (error) {
+    return {
+      status: false,
+      message: "An error occurred",
+    };
+  }
 }
 
 async function GetUserById(id: Number | undefined) {
   const requestOptions = {
-    method: "GET"
+    method: "GET",
   };
 
-  let res = await fetch(`${apiUrl}/user/${id}`, requestOptions)
-    .then((res) => {
-      if (res.status == 200) {
-        return res.json();
-      } else {
-        return false;
-      }
-    });
+  try {
+    const response = await fetch(`${apiUrl}/user/${id}`, requestOptions);
+    const data = await response.json();
 
-  return res;
+    return {
+      status: response.ok,
+      data: data,
+      message: response.ok ? data.message : data.error,
+    };
+  } catch (error) {
+    return {
+      status: false,
+      message: "An error occurred",
+    };
+  }
 }
-
 
 async function CreateUser(data: UsersInterface) {
   const requestOptions = {
@@ -84,16 +102,20 @@ async function CreateUser(data: UsersInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/users`, requestOptions)
-    .then((res) => {
-      if (res.status == 201) {
-        return res.json();
-      } else {
-        return false;
-      }
-    });
+  try {
+    const response = await fetch(`${apiUrl}/users`, requestOptions);
+    const data = await response.json();
 
-  return res;
+    return {
+      status: response.ok,
+      message: response.ok ? data.message : data.error,
+    };
+  } catch (error) {
+    return {
+      status: false,
+      message: "An error occurred",
+    };
+  }
 }
 
 async function UpdateUser(data: UsersInterface) {
@@ -103,16 +125,20 @@ async function UpdateUser(data: UsersInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/users`, requestOptions)
-    .then((res) => {
-      if (res.status == 200) {
-        return res.json();
-      } else {
-        return false;
-      }
-    });
+  try {
+    const response = await fetch(`${apiUrl}/users`, requestOptions);
+    const data = await response.json();
 
-  return res;
+    return {
+      status: response.ok,
+      message: response.ok ? data.message : data.error,
+    };
+  } catch (error) {
+    return {
+      status: false,
+      message: "An error occurred",
+    };
+  }
 }
 
 export {
@@ -121,5 +147,5 @@ export {
   GetGenders,
   DeleteUserByID,
   GetUserById,
-  UpdateUser
+  UpdateUser,
 };

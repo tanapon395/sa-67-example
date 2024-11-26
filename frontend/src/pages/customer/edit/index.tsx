@@ -35,7 +35,7 @@ function CustomerEdit() {
   const onFinish = async (values: UsersInterface) => {
     values.ID = user?.ID;
     let res = await UpdateUser(values);
-    if (res) {
+    if (res.status) {
       messageApi.open({
         type: "success",
         content: res.message,
@@ -53,22 +53,25 @@ function CustomerEdit() {
 
   const getGendet = async () => {
     let res = await GetGenders();
-    if (res) {
-      setGenders(res);
+    if (res.status) {
+      setGenders(res.data);
     }
   };
 
   const getUserById = async () => {
     let res = await GetUserById(Number(id));
-    if (res) {
-      setUser(res);
+    if (res.status) {
+      setUser(res.data);
       // set form ข้อมูลเริ่มของผู่้ใช้ที่เราแก้ไข
       form.setFieldsValue({
-        FirstName: res.FirstName,
-        LastName: res.LastName,
-        GenderID: res.GenderID,
-        Email: res.Email,
-        BirthDay: dayjs(res.BirthDay),
+        StudentID: res.data.StudentID,
+        FirstName: res.data.FirstName,
+        LastName: res.data.LastName,
+        GenderID: res.data.GenderID,
+        Email: res.data.Email,
+        Phone: res.data.Phone,
+        LinkedIn: res.data.LinkedIn,
+        BirthDay: dayjs(res.data.BirthDay),
       });
     }
   };
@@ -120,7 +123,72 @@ function CustomerEdit() {
                 <Input />
               </Form.Item>
             </Col>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
+                label="รหัสนักศึกษา"
+                name="StudentID"
+                rules={[
+                  {
+                    required: true,
+                    message: "กรุณากรอกรหัสนักศึกษา !",
+                  },
+                  {
+                    pattern: /^[BMD][0-9]{7}$/,
+                    message: "ID must start with 'BMD' followed by exactly 7 digits!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
+                name="GenderID"
+                label="เพศ"
+                rules={[{ required: true, message: "กรุณาระบุเพศ !" }]}
+              >
+                <Select allowClear>
+                  {genders.map((item) => (
+                    <Option value={item.ID} key={item.Name}>
+                      {item.Name}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
 
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
+                label="เบอร์โทรศัพท์"
+                name="Phone"
+                rules={[
+                  {
+                    required: true,
+                    message: "กรุณากรอกเบอร์โทรศัพท์ !",
+                  },
+                  {
+                    pattern: /^[0]\d{9}$/,
+                    message: "Phone number must be exactly 10 digits and start with '0'!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
+                label="LinkedIn"
+                name="LinkedIn"
+                rules={[
+                  {
+                    required: true,
+                    message: "กรุณากรอก LinkedIn Profile URL !",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
               <Form.Item
                 label="อีเมล"
@@ -151,21 +219,6 @@ function CustomerEdit() {
                 ]}
               >
                 <DatePicker style={{ width: "100%" }} />
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-              <Form.Item
-                name="GenderID"
-                label="เพศ"
-                rules={[{ required: true, message: "กรุณาระบุเพศ !" }]}
-              >
-                <Select allowClear>
-                  {genders.map((item) => (
-                    <Option value={item.ID} key={item.Name}>
-                      {item.Name}
-                    </Option>
-                  ))}
-                </Select>
               </Form.Item>
             </Col>
           </Row>

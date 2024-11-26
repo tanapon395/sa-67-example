@@ -53,8 +53,7 @@ function CustomerCreate() {
   const onFinish = async (values: UsersInterface) => {
     values.Profile = fileList[0].thumbUrl;
     let res = await CreateUser(values);
-    console.log(res);
-    if (res) {
+    if (res.status) {
       messageApi.open({
         type: "success",
         content: "บันทึกข้อมูลสำเร็จ",
@@ -72,8 +71,8 @@ function CustomerCreate() {
 
   const getGender = async () => {
     let res = await GetGenders();
-    if (res) {
-      setGenders(res);
+    if (res.status) {
+      setGenders(res.data);
     }
   };
 
@@ -152,6 +151,71 @@ function CustomerCreate() {
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
               <Form.Item
+                label="รหัสนักศึกษา"
+                name="StudentID"
+                rules={[
+                  {
+                    required: true,
+                    message: "กรุณากรอกรหัสนักศึกษา !",
+                  },
+                  {
+                    pattern: /^[BMD][0-9]{7}$/,
+                    message: "ID must start with 'BMD' followed by exactly 7 digits!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
+                name="GenderID"
+                label="เพศ"
+                rules={[{ required: true, message: "กรุณาระบุเพศ !" }]}
+              >
+                <Select allowClear>
+                  {genders.map((item) => (
+                    <Option value={item.ID} key={item.Name}>
+                      {item.Name}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
+                label="เบอร์โทรศัพท์"
+                name="Phone"
+                rules={[
+                  {
+                    required: true,
+                    message: "กรุณากรอกเบอร์โทรศัพท์ !",
+                  },
+                  {
+                    pattern: /^[0]\d{9}$/,
+                    message: "Phone number must be exactly 10 digits and start with '0'!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
+                label="LinkedIn"
+                name="LinkedIn"
+                rules={[
+                  {
+                    required: true,
+                    message: "กรุณากรอก LinkedIn Profile URL !",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              <Form.Item
                 label="อีเมล"
                 name="Email"
                 rules={[
@@ -171,7 +235,7 @@ function CustomerCreate() {
             <Col xs={24} sm={24} md={24} lg={24} xl={12}>
               <Form.Item
                 label="รหัสผ่าน"
-                name="password"
+                name="Password"
                 rules={[
                   {
                     required: true,
@@ -183,37 +247,20 @@ function CustomerCreate() {
               </Form.Item>
             </Col>
           </Row>
-          <Row gutter={[16, 16]}>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-              <Form.Item
-                label="วัน/เดือน/ปี เกิด"
-                name="birthday"
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: "กรุณาเลือกวัน/เดือน/ปี เกิด !",
-                //   },
-                // ]}
-              >
-                <DatePicker style={{ width: "100%" }} />
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-              <Form.Item
-                name="GenderID"
-                label="เพศ"
-                rules={[{ required: true, message: "กรุณาระบุเพศ !" }]}
-              >
-                <Select allowClear>
-                  {genders.map((item) => (
-                    <Option value={item.ID} key={item.Name}>
-                      {item.Name}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
+          <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+            <Form.Item
+              label="วัน/เดือน/ปี เกิด"
+              name="Birthday"
+              rules={[
+                {
+                  required: true,
+                  message: "กรุณาเลือกวัน/เดือน/ปี เกิด !",
+                },
+              ]}
+            >
+              <DatePicker style={{ width: "100%" }} />
+            </Form.Item>
+          </Col>
           <Row justify="end">
             <Col style={{ marginTop: "40px" }}>
               <Form.Item>

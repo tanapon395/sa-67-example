@@ -8,14 +8,17 @@ import (
 
 type User struct {
 	gorm.Model
-	FirstName string
-	LastName  string
-	Email     string
+	StudentID string `valid:"required~StudentID is required, matches(^[BMD]\\d{7}$)"`
+	FirstName string `valid:"required~FirstName is required"`
+	LastName  string `valid:"required~LastName is required"`
+	Email     string `valid:"required~Email is required, email~Email is invalid"`
+	Phone     string `valid:"required~Phone is required, stringlength(10|10)"`
+	Profile   string `gorm:"type:longtext"`
+	LinkedIn  string `valid:"required~LinkedIn is required, url~Url LinkedIn is invalid"`
 	Password  string
 	BirthDay  time.Time
-	Profile   string `gorm:"type:longtext"`
 
 	// GenderID ทำหน้าที่เป็น FK
-	GenderID uint
-	Gender   Gender `gorm:"foriegnKey:GenderID"`
+	GenderID uint   `valid:"required~Gender is required"`
+	Gender   Gender `gorm:"foreignKey:GenderID"`
 }

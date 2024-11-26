@@ -20,8 +20,12 @@ function Customers() {
       key: "profile",
       width: "15%",
       render: (text, record, index) => (
-        <img src={record.Profile} className="w3-left w3-circle w3-margin-right" width="100%" />
-      )
+        <img
+          src={record.Profile}
+          className="w3-left w3-circle w3-margin-right"
+          width="100%"
+        />
+      ),
     },
     {
       title: "ชื่อ",
@@ -89,8 +93,8 @@ function Customers() {
 
   const getUsers = async () => {
     let res = await GetUsers();
-    if (res) {
-      setUsers(res);
+    if (res.status) {
+      setUsers(res.data);
     }
   };
 
@@ -105,7 +109,7 @@ function Customers() {
   const handleOk = async () => {
     setConfirmLoading(true);
     let res = await DeleteUserByID(deleteId);
-    if (res) {
+    if (res.status) {
       setOpen(false);
       messageApi.open({
         type: "success",
