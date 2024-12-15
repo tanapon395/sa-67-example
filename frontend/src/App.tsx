@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { UserOutlined, DashboardOutlined } from "@ant-design/icons";
-import type { MenuProps } from "antd";
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,21 +17,6 @@ import CustomerEdit from "./pages/customer/edit";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-type MenuItem = Required<MenuProps>["items"][number];
-
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[]
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  } as MenuItem;
-}
 
 
 const App: React.FC = () => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Space,
   Button,
@@ -13,7 +13,7 @@ import {
   DatePicker,
   Upload,
 } from "antd";
-import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { UsersInterface } from "../../../interfaces/IUser";
 import { GendersInterface } from "../../../interfaces/IGender";
 import { CreateUser, GetGenders } from "../../../services/https";
