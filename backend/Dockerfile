@@ -1,6 +1,6 @@
 FROM golang:1.22-alpine
 WORKDIR /go/src/github.com/tanapon395/sa-67-example
-COPY . .
+COPY backend .
 RUN apk add build-base
 RUN go mod tidy
 RUN go build -o main .
