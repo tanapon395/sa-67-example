@@ -16,7 +16,7 @@ type User struct {
 	Profile   string `gorm:"type:longtext"`
 	LinkedIn  string `valid:"required~LinkedIn is required, url~Url LinkedIn is invalid"`
 	Password  string
-	BirthDay  time.Time
+	BirthDay  time.Time `valid:"required~BirthDay is required"`
 
 	// GenderID ทำหน้าที่เป็น FK
 	GenderID uint   `valid:"required~Gender is required"`

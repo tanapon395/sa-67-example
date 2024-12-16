@@ -23,7 +23,7 @@ func TestStudentID(t *testing.T) {
 			Phone:     "0800000000",
 			Profile:   "",
 			Password:  "",
-			BirthDay:  time.Now(),
+			BirthDay:  time.Now().AddDate(-20, 0, 0),
 			LinkedIn:  "https://www.linkedin.com/company/ilink/",
 			GenderID:  1,
 		}
@@ -49,7 +49,7 @@ func TestStudentID(t *testing.T) {
 			Phone:     "0800000000",
 			Profile:   "",
 			Password:  "",
-			BirthDay:  time.Now(),
+			BirthDay:  time.Now().AddDate(-20, 0, 0),
 			LinkedIn:  "https://www.linkedin.com/company/ilink/",
 			GenderID:  1,
 		}
@@ -79,7 +79,7 @@ func TestPhoneNumber(t *testing.T) {
 			Phone:     "", // ผิดตรงนี้
 			Profile:   "",
 			Password:  "",
-			BirthDay:  time.Now(),
+			BirthDay:  time.Now().AddDate(-20, 0, 0),
 			LinkedIn:  "https://www.linkedin.com/company/ilink/",
 			GenderID:  1,
 		}
@@ -105,7 +105,7 @@ func TestPhoneNumber(t *testing.T) {
 			Phone:     "080800000000", // ผิดตรงนี้ มี 11 ตัว
 			Profile:   "",
 			Password:  "",
-			BirthDay:  time.Now(),
+			BirthDay:  time.Now().AddDate(-20, 0, 0),
 			LinkedIn:  "https://www.linkedin.com/company/ilink/",
 			GenderID:  1,
 		}
@@ -124,20 +124,21 @@ func TestPhoneNumber(t *testing.T) {
 	})
 }
 
-func TestValid(t *testing.T) {
+func TestUser_Valid(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	t.Run(`valid`, func(t *testing.T) {
+	t.Run("valid user", func(t *testing.T) {
+		// A valid user object
 		user := entity.User{
-			StudentID: "M6601140",
-			FirstName: "unit",
-			LastName:  "test",
-			Email:     "test@gmail.com",
-			Phone:     "0800000000",
-			Profile:   "",
-			Password:  "",
-			BirthDay:  time.Now(),
-			LinkedIn:  "https://www.linkedin.com/company/ilink/",
+			StudentID: "B6601140",
+			FirstName: "John",
+			LastName:  "Doe",
+			Email:     "john.doe@example.com",
+			Phone:     "0801234567",
+			Profile:   "A detailed profile description.",
+			LinkedIn:  "https://www.linkedin.com/in/johndoe/",
+			Password:  "securepassword",
+			BirthDay:  time.Now().AddDate(-20, 0, 0),
 			GenderID:  1,
 		}
 
@@ -145,8 +146,8 @@ func TestValid(t *testing.T) {
 		ok, err := govalidator.ValidateStruct(user)
 
 		// ok ต้องไม่เป็นค่า true แปลว่าต้องจับ error ได้
-		g.Expect(ok).NotTo(BeTrue())
+		g.Expect(ok).To(BeTrue(), "Expected validation to pass, but it failed.")
 		// err ต้องไม่เป็นค่า nil แปลว่าต้องจับ error ได้
-		g.Expect(err).NotTo(BeNil())
+		g.Expect(err).To(BeNil(), "Expected no validation errors, but got some.")
 	})
 }
