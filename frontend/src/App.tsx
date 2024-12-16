@@ -91,7 +91,7 @@ const App: React.FC = () => {
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            System Analysis and Design 1/67
+            Software Engineering 2/67
           </Footer>
         </Layout>
       </Layout>
