@@ -1,7 +1,6 @@
 name: test_backend
 
 on:
-  pull_request:
   push:
     branches:
       - deploy
