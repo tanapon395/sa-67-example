@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { UserOutlined, DashboardOutlined } from "@ant-design/icons";
+import { DashboardOutlined } from "@ant-design/icons";
 import {
   BrowserRouter as Router,
   Routes,
