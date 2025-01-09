@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Space, Table, Button, Col, Row, Divider, Modal, message } from "antd";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
@@ -19,7 +19,7 @@ function Customers() {
       dataIndex: "Profile",
       key: "profile",
       width: "15%",
-      render: (record) => (
+      render: (_, record) => (
         <img
           src={record.Profile}
           className="w3-left w3-circle w3-margin-right"
@@ -56,9 +56,8 @@ function Customers() {
     },
     {
       title: "จัดการ",
-      dataIndex: "Manage",
       key: "manage",
-      render: (record) => (
+      render: (_, record) => (
         <>
           <Button
             onClick={() => navigate(`/customer/edit/${record.ID}`)}

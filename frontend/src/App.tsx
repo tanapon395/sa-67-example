@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { UserOutlined, DashboardOutlined } from "@ant-design/icons";
+import { DashboardOutlined, UserOutlined } from "@ant-design/icons";
 import {
   BrowserRouter as Router,
   Routes,
@@ -91,7 +91,7 @@ const App: React.FC = () => {
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            Software Engineering 2/67
+            Software Engineering 2/2567
           </Footer>
         </Layout>
       </Layout>
