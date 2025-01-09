@@ -1,6 +1,6 @@
 import { UsersInterface } from "../../interfaces/IUser";
 
-const apiUrl = "http://localhost:8000";
+const apiUrl = "https://api.megroup.site";
 
 async function GetUsers() {
   const requestOptions = {

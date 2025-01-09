@@ -8,8 +8,6 @@ import (
 	"github.com/tanapon395/sa-67-example/controller"
 )
 
-const PORT = "8000"
-
 func main() {
 
 	// open connection database
@@ -36,12 +34,12 @@ func main() {
 	}
 
 	r.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "API RUNNING... PORT: %s", PORT)
+		c.String(http.StatusOK, "API RUNNING... PORT: %s")
 	})
 
 	// Run the server
 
-	r.Run("localhost:" + PORT)
+	r.Run()
 
 }
 

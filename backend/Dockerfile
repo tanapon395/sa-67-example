@@ -1,8 +1,10 @@
 FROM golang:1.22-alpine
-WORKDIR /go/src/github.com/tanapon395/sa-67-example
+WORKDIR /app
 COPY backend .
-RUN apk add build-base
+RUN apk add --no-cache build-base
 RUN go mod tidy
 RUN go build -o main .
-EXPOSE 8000
+EXPOSE 8080
 CMD ["./main"]
+
+
