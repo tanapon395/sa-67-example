@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DashboardOutlined } from "@ant-design/icons";
+import { DashboardOutlined, UserOutlined } from "@ant-design/icons";
 import {
   BrowserRouter as Router,
   Routes,
@@ -63,12 +63,12 @@ const App: React.FC = () => {
                 <span>แดชบอร์ด</span>
               </Link>
             </Menu.Item>
-            {/* <Menu.Item key="customer" className="d-md-none" onClick={() => setCurrentPage("customer")}>
+            <Menu.Item key="customer" className="d-md-none" onClick={() => setCurrentPage("customer")}>
               <Link to="/customer">
                 <UserOutlined />
                 <span>ข้อมูลสมาชิก</span>
               </Link>
-            </Menu.Item> */}
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
