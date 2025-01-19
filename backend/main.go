@@ -34,7 +34,7 @@ func main() {
 	}
 
 	r.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "API RUNNING... PORT: %s")
+		c.String(http.StatusOK, "API RUNNING...")
 	})
 
 	// Run the server
