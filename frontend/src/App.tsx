@@ -91,7 +91,7 @@ const App: React.FC = () => {
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            Software Engineering 2/2567
+            Software Engineering 2/2567 (Fix Docker Compose Version)
           </Footer>
         </Layout>
       </Layout>
